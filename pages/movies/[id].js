@@ -9,6 +9,8 @@ export async function getStaticProps(context) {
     const data=await getMovieById(id);
     const director= await getDirectorById(data.directorId);
     data.director=director;
+    //console.log(director);
+
     return {
         props: { movie: data },
         revalidate: 60,
@@ -27,7 +29,7 @@ export default function MovieDetailsPage({ movie }) {
             <p>{movie.description}</p>
             <p>Rating: {movie.rating}</p>
             <p>Release Year: {movie.releaseYear}</p>
-            <Link href={`/director/${movie.director.name}`}><p>Director: {movie.director.name}</p></Link>
+            <Link href={`/movies/director/${movie.director.id}`}><p>Director: {movie.director.name}</p></Link>
         </div>
     );
 }

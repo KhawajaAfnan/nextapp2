@@ -39,3 +39,9 @@ export async function getDirectorById(directorId) {
     const director = data.directors.find(director => director.id === directorId);
     return director;
 }
+export async function getMoviesByDirectorId(directorId) {
+    const jsonData = fs.readFileSync(filePath, 'utf-8');
+    const data = JSON.parse(jsonData);
+    const moviesByDirector = data.movies.filter(movie => movie.directorId === directorId);
+    return moviesByDirector;
+}
