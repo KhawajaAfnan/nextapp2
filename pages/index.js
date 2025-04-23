@@ -44,6 +44,9 @@ export default function HomePage({ movies }) {
       <button onClick={() => router.push('/movies')}>
         Browse All Movies
       </button>
+      <button onClick={() => router.push('/help')}>
+        HELP
+      </button>
     </div>
   );
 }
