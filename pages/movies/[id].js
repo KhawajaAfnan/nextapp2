@@ -7,10 +7,15 @@ import { useRouter } from "next/router";
 export async function getStaticProps(context) {
     const id= context.params.id;    
     const data=await getMovieById(id);
+    if (!data || data.length === 0) {
+        return {
+          notFound: true,
+        };
+      }
     const director= await getDirectorById(data.directorId);
     data.director=director;
     //console.log(director);
-
+    
     return {
         props: { movie: data },
         revalidate: 60,
