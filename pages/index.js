@@ -3,6 +3,11 @@ import { useRouter } from 'next/router';
 
 export async function getStaticProps() {
   const result = await getTrendingMovies();
+  if (!result || result.length === 0) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: { movies: result },

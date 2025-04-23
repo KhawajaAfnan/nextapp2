@@ -4,6 +4,11 @@ import { getAllMovies } from '../../data/movies';
 
 export async function getStaticProps(){
     const movies= await getAllMovies();
+    if (!movies || movies.length === 0) {
+        return {
+          notFound: true,
+        };
+      }
     return {
         props: { movies },
     };
