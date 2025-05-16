@@ -1,47 +1,43 @@
-import fs from 'fs';
-import path from 'path';
-
-const filePath = path.join(process.cwd(),'data', 'movies.json');
+import clientPromise from './db.js';
 
 export async function getTrendingMovies() {
-    const jsonData = fs.readFileSync(filePath, 'utf-8');
-    const data = JSON.parse(jsonData);
-    const topMovies = data.movies.sort((a, b) => b.rating - a.rating).slice(0, 3);
-    return topMovies; 
-
+  const client = await clientPromise;
+  const db = client.db(process.env.MONGODB_DB || 'Assignment3');
+  return await db.collection('movies').find({}).toArray();
 }
 
 export async function getGenres() {
-    const jsonData = fs.readFileSync(filePath, 'utf-8');
-    const data = JSON.parse(jsonData);
-    return data.genres;
+  const client = await clientPromise;
+  const db = client.db(process.env.MONGODB_DB || 'Assignment3');
+  return await db.collection('genres').find({}).toArray();
 }
+
 export async function getMoviesByGenre(genreId) {
-    const jsonData = fs.readFileSync(filePath, 'utf-8');
-    const data = JSON.parse(jsonData);
-    const moviesByGenre = data.movies.filter(movie => movie.genreId === genreId);
-    return moviesByGenre;
+  const client = await clientPromise;
+  const db = client.db(process.env.MONGODB_DB || 'Assignment3');
+  return await db.collection('movies').find({ genreId }).toArray();
 }
+
 export async function getAllMovies() {
-    const jsonData = fs.readFileSync(filePath, 'utf-8');
-    const data = JSON.parse(jsonData);
-    return data.movies;
+  const client = await clientPromise;
+  const db = client.db(process.env.MONGODB_DB || 'Assignment3');
+  return await db.collection('movies').find({}).toArray();
 }
+
 export async function getMovieById(movieId) {
-    const jsonData = fs.readFileSync(filePath, 'utf-8');
-    const data = JSON.parse(jsonData);
-    const movie = data.movies.find(movie => movie.id === movieId);
-    return movie;
+  const client = await clientPromise;
+  const db = client.db(process.env.MONGODB_DB || 'Assignment3');
+  return await db.collection('movies').findOne({ id: movieId });
 }
+
 export async function getDirectorById(directorId) {
-    const jsonData = fs.readFileSync(filePath, 'utf-8');
-    const data = JSON.parse(jsonData);
-    const director = data.directors.find(director => director.id === directorId);
-    return director;
+  const client = await clientPromise;
+  const db = client.db(process.env.MONGODB_DB || 'Assignment3');
+  return await db.collection('directors').findOne({ id: directorId });
 }
+
 export async function getMoviesByDirectorId(directorId) {
-    const jsonData = fs.readFileSync(filePath, 'utf-8');
-    const data = JSON.parse(jsonData);
-    const moviesByDirector = data.movies.filter(movie => movie.directorId === directorId);
-    return moviesByDirector;
+  const client = await clientPromise;
+  const db = client.db(process.env.MONGODB_DB || 'Assignment3');
+  return await db.collection('movies').find({ directorId }).toArray();
 }
