@@ -1,16 +1,9 @@
-import { MongoClient } from "mongodb";
+import { getDb } from '../../../data/db';
 
 export default async function handler(req, res) {
   try {
-    // Connect to MongoDB Atlas
-    const client = await MongoClient.connect(
-      "mongodb+srv://p4ths:lahore123@cluster0.wjaekvz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-    );
-
-    const db = client.db("Assignment3");
+    const db = await getDb();
     const directors = await db.collection("directors").find().toArray();
-    
-    await client.close();
 
     res.status(200).json(directors);
   } catch (error) {

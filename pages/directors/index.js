@@ -136,51 +136,53 @@ export default function DirectorsPage() {
                 </Typography>
               </Box>
 
-              <CardActionArea onClick={() => router.push(`/directors/${director.id}`)}>
-                <CardContent sx={{ pt: 3 }}>
-                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, alignItems: 'center' }}>
-                    {director.nationality && (
-                      <Chip
-                        icon={<LocationOn />}
-                        label={director.nationality}
-                        variant="outlined"
-                        color="primary"
-                      />
-                    )}
-                    {director.birthYear && (
-                      <Typography 
-                        variant="body1" 
-                        color="text.secondary" 
-                        align="center"
-                        sx={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: 1
-                        }}
-                      >
-                        <Star sx={{ fontSize: 20 }} />
-                        Born: {director.birthYear}
-                      </Typography>
-                    )}
-                    <Divider sx={{ width: '80%', my: 1 }} />
-                    <Button
-                      variant="contained"
-                      startIcon={<Movie />}
-                      size="small"
+              <CardContent sx={{ pt: 3 }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, alignItems: 'center' }}>
+                  {director.nationality && (
+                    <Chip
+                      icon={<LocationOn />}
+                      label={director.nationality}
+                      variant="outlined"
+                      color="primary"
+                    />
+                  )}
+                  {director.birthYear && (
+                    <Typography 
+                      variant="body1" 
+                      color="text.secondary" 
+                      align="center"
                       sx={{
-                        mt: 1,
-                        background: 'linear-gradient(45deg, #1a237e 30%, #0d47a1 90%)',
-                        color: 'white',
-                        '&:hover': {
-                          background: 'linear-gradient(45deg, #0d47a1 30%, #1a237e 90%)',
-                        }
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1
                       }}
                     >
-                      View Filmography
-                    </Button>
-                  </Box>
-                </CardContent>
-              </CardActionArea>
+                      <Star sx={{ fontSize: 20 }} />
+                      Born: {director.birthYear}
+                    </Typography>
+                  )}
+                  <Divider sx={{ width: '80%', my: 1 }} />
+                  <Button
+                    variant="contained"
+                    startIcon={<Movie />}
+                    size="small"
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent CardActionArea click
+                      router.push(`/movies/director/${director.id}`);
+                    }}
+                    sx={{
+                      mt: 1,
+                      background: 'linear-gradient(45deg, #1a237e 30%, #0d47a1 90%)',
+                      color: 'white',
+                      '&:hover': {
+                        background: 'linear-gradient(45deg, #0d47a1 30%, #1a237e 90%)',
+                      }
+                    }}
+                  >
+                    View Filmography
+                  </Button>
+                </Box>
+              </CardContent>
             </Card>
           </Grid>
         ))}

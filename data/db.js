@@ -11,22 +11,23 @@ const options = {
 console.log("MONGODB_URI:", process.env.MONGODB_URI);
 console.log("MONGODB_DB:", process.env.MONGODB_DB);
 
-let client;
-let clientPromise;
-
 if (!uri) {
   throw new Error('Please define the MONGODB_URI environment variable');
 }
 
-if (process.env.NODE_ENV === 'development') {
-  if (!global._mongoClientPromise) {
-    client = new MongoClient(uri, options);
-    global._mongoClientPromise = client.connect();
+const client = new MongoClient(uri, options);
+
+// Create a singleton instance
+let dbClient = null;
+
+export async function getDbClient() {
+  if (!dbClient) {
+    dbClient = await client.connect();
   }
-  clientPromise = global._mongoClientPromise;
-} else {
-  client = new MongoClient(uri, options);
-  clientPromise = client.connect();
+  return dbClient;
 }
 
-export default clientPromise;
+export async function getDb() {
+  const client = await getDbClient();
+  return client.db(process.env.MONGODB_DB || 'Assignment3');
+}

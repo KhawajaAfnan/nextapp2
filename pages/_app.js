@@ -6,7 +6,6 @@ import Navbar from '../components/Navbar';
 function MyApp({ Component, pageProps }) {
   const [mounted, setMounted] = React.useState(false);
 
-  // Fix for hydration mismatch with localStorage
   React.useEffect(() => {
     setMounted(true);
   }, []);
